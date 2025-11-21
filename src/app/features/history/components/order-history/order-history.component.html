@@ -1,4 +1,11 @@
 <div class="page-content">
   <h1>{{ pageName }}</h1>
-  <p>This is the Order History page.</p>
+
+  <app-data-table
+    [columns]="columns"
+    [data]="orders"
+    [actions]="actions"
+    [idKey]="'orderId'"
+    (dataUpdated)="onDataUpdated($event)"
+  ></app-data-table>
 </div>

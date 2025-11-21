@@ -6,9 +6,9 @@ import { DashboardHomeComponent } from './components/dashboard-home/dashboard-ho
 const routes: Routes = [
   {
     path: '',
-    component: DashboardShellComponent,
+    component: DashboardShellComponent,   /// so this is the shell one we are displaying ok?
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'home', pathMatch: 'full' }, // defaultt
       { path: 'home', component: DashboardHomeComponent },
       {
         path: 'stocks',

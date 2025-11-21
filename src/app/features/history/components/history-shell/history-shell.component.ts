@@ -8,6 +8,6 @@ import { Tab } from '../../../../shared/components/tab-bar/tab-bar.component';
 })
 export class HistoryShellComponent {
   tabs: Tab[] = [
-    { label: 'Order History', route: '/history/orders' }
+    { label: 'Order History tab', route: '/history/orders' }
   ];
 }
