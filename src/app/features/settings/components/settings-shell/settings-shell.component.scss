@@ -1,0 +1,11 @@
+.settings-shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
