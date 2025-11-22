@@ -1,0 +1,75 @@
+<div class="table-container" (click)="closeDropdown()">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns">{{ column.header }}</th>
+        <th *ngIf="actions.length > 0">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of data" [class.editing]="isEditing(row[idKey])">
+        <td *ngFor="let column of columns">
+          <!-- Non-editable or not in edit mode -->
+          <span *ngIf="!isEditing(row[idKey]) || !column.editable">
+            {{ formatValue(row[column.key], column) }}
+          </span>
+
+          <!-- Editable and in edit mode -->
+          <input
+            *ngIf="isEditing(row[idKey]) && column.editable"
+            [type]="column.type || 'text'"
+            [value]="editedRow[column.key]"
+            (input)="updateEditedValue(column, $any($event.target).value)"
+            class="edit-input"
+            [step]="column.type === 'number' ? '0.01' : undefined"
+          />  
+        </td>
+
+        <!-- Actions Column --> 
+        <td *ngIf="actions.length > 0" class="actions-cell">
+          <div class="dropdown-container">
+            <button
+              class="dropdown-trigger"
+              (click)="toggleDropdown(row[idKey], $event)"
+              [disabled]="isAnyRowEditing() && !isEditing(row[idKey])"
+            >
+              ⋮
+            </button>
+
+            <!-- Normal mode: Regular actions -->
+            <div
+              *ngIf="isDropdownOpen(row[idKey]) && !isEditing(row[idKey])"
+              class="dropdown-menu"
+              (click)="$event.stopPropagation()"
+            >
+              <button
+                *ngFor="let action of actions"
+                class="dropdown-item"
+                (click)="executeAction(action, row, $event)"
+              >
+                <span *ngIf="action.icon" class="action-icon">{{ action.icon }}</span>
+                {{ action.label }}
+              </button>
+            </div>
+
+            <!-- Edit mode: Update and Cancel -->
+            <div
+              *ngIf="isDropdownOpen(row[idKey]) && isEditing(row[idKey])"
+              class="dropdown-menu"
+              (click)="$event.stopPropagation()"
+            >
+              <button class="dropdown-item" (click)="updateRow(); closeDropdown()">
+                <span class="action-icon">✅</span>
+                Update
+              </button>
+              <button class="dropdown-item" (click)="cancelEdit(); closeDropdown()">
+                <span class="action-icon">❌</span>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
