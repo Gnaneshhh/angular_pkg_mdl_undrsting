@@ -11,9 +11,11 @@ interface NavItem {
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
+  
   navItems: NavItem[] = [
     { label: 'Dashboard', route: '/dashboard' },
     { label: 'History', route: '/history' },
     { label: 'Settings', route: '/settings' }
   ];
+
 }
